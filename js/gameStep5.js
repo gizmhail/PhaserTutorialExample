@@ -70,7 +70,7 @@ gameStateStep5.prototype = {
         this.goalLayer = map.createLayer('goals');
         //The world will have the map size
         backgroundLayer.resizeWorld();
-        //The camera will follow the player, as the world is bigger than the scree
+        //The camera will follow the player, as the world is bigger than the screen
         tutorialGame.camera.follow(this.characterSprite);
         // Every tiles in the walls layer will be able to colide in this layer
         map.setCollisionByExclusion([],true,'walls');
@@ -166,8 +166,8 @@ gameStateStep5.prototype = {
             text.fixedToCamera = true;
             tutorialGame.paused = true;
             window.setTimeout(function(){
-                //tutorialGame.state.restart(true);
-                //tutorialGame.paused = false;
+                tutorialGame.state.restart(true);
+                tutorialGame.paused = false;
             }, 2000);
             return true;
         }, null, this);
