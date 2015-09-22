@@ -58,8 +58,14 @@ gameStateStep5.prototype = {
         //Ball body
         tutorialGame.physics.enable(this.ballSprite, Phaser.Physics.ARCADE);
         this.ballSprite.body.collideWorldBounds = true;
-        this.ballSprite.body.bounce.set(1,1);
+        // A ball is very bouncy, we set its bounce to the max
+        this.ballSprite.body.bounce.set(0.8, 0.8);
+        // We decrease the default mass (1) to have a more reactive ball during collision (it is not as heavy as the player !)
         this.ballSprite.body.mass = 0.5;
+        // Drag will progressively decrease ball velocity
+        this.ballSprite.body.drag.x = 50;
+        this.ballSprite.body.drag.y = 50;
+
 
         var map = tutorialGame.add.tilemap('map');
         // The tileset name must match the one defined in Tiled
@@ -119,9 +125,6 @@ gameStateStep5.prototype = {
         var maxCharacterVelocity = 300;
         this.characterSprite.body.maxVelocity.set(maxCharacterVelocity,maxCharacterVelocity);    
 
-        // Ball deceleration
-        this.ballSprite.body.velocity.x *= 0.98;
-        this.ballSprite.body.velocity.y *= 0.98;
         // Ball/player collision customization
         tutorialGame.physics.arcade.collide(this.characterSprite, this.ballSprite, function(){
             console.log("Ball was touched by player");

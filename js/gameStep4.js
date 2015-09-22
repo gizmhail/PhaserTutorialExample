@@ -47,11 +47,16 @@ gameStateStep4.prototype = {
         this.characterSprite.body.collideWorldBounds = true;
         // We limit the physic body to a smaller part of the sprite (it contains white spaces)
         this.characterSprite.body.setSize(15, 35, 25, 20);
-        //Ball body
+        // Ball body
         tutorialGame.physics.enable(this.ballSprite, Phaser.Physics.ARCADE);
         this.ballSprite.body.collideWorldBounds = true;
-        this.ballSprite.body.bounce.set(1,1);
+        // A ball is very bouncy, we set its bounce to an hight percentage
+        this.ballSprite.body.bounce.set(0.8,0.8);
+        // We decrease the default mass (1) to have a more reactive ball during collision (it is not as heavy as the player !)
         this.ballSprite.body.mass = 0.5;
+        // Drag will progressively decrease ball velocity (otherwise, it will go forever once touched)
+        this.ballSprite.body.drag.x = 50;
+        this.ballSprite.body.drag.y = 50;
     },
     // Called for each refresh
     update: function (){
@@ -90,8 +95,8 @@ gameStateStep4.prototype = {
         this.characterSprite.body.maxVelocity.set(maxCharacterVelocity,maxCharacterVelocity);    
 
         // Ball deceleration
-        this.ballSprite.body.velocity.x *= 0.98;
-        this.ballSprite.body.velocity.y *= 0.98;
+        //this.ballSprite.body.velocity.x *= 0.98;
+        //this.ballSprite.body.velocity.y *= 0.98;
         // Collision check (basic collision, square body against square body - we will improve it in next step)
         tutorialGame.physics.arcade.collide(this.characterSprite, this.ballSprite, function(){
             console.log("Ball was touched by player");
